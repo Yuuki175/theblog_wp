@@ -40,7 +40,7 @@
                     <p>
                     <?php the_excerpt(); ?>
                     </p>
-                    <a href="#">Read More...</a>
+                    <a href="<?php echo the_permalink(); ?>">Read More...</a>
                 </div>
                 </article>
 
@@ -75,7 +75,7 @@
                     <div class="card__sm__content">
                         <small> <?php echo get_the_date('M-d-Y') ?>; </small>
                         <h3><?php the_title(); ?> </h3>
-                        <a href="#">Read More...</a>
+                        <a href="<?php echo the_permalink(); ?>">Read More...</a>
                     </div>
                 </div>
 
@@ -140,7 +140,7 @@
                 <p>
                     <?php echo get_the_excerpt(); ?>
                 </p>
-                <a href="#">Read More...</a>
+                <a href="<?php echo the_permalink(); ?>">Read More...</a>
             </div>
         </div>
 
@@ -209,7 +209,7 @@
             <p>
                 <?php echo get_the_excerpt(); ?>
             </p>
-            <a data-href="#">Read More...</a>
+            <a href="<?php echo the_permalink(); ?>">Read More...</a>
             </div>
         </article>
 
@@ -226,58 +226,38 @@
 
         </div>
         <div class="feature__sidebar">
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
 
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
+            <?php
 
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
+                $args = array(
+                    'post_type' => 'featuresPost',
+                    'posts_per_page' => 6,
+                    'offset' => 3,
+                );
 
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
+                $newQuery = new WP_Query($args)
+            ?>
 
-        <div class="card__mini">
-            <small><?php echo get_the_date('M-d-Y'); ?></small>
-            <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-            sit.
-            </h4>
-            <a href="#">Read More ...</a>
-        </div>
+            <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post(); ?>
+
+            
+            <div class="card__mini">
+                <small><?php echo get_the_date('M-d-Y'); ?></small>
+                <h4>
+                    <?php echo get_the_title(); ?>
+                </h4>
+                <a href="<?php echo the_permalink(); ?>">Read More ...</a>
+            </div>
+
+
+            <?php 
+            
+                endwhile;
+                else:
+                    echo "no available content";
+                endif;
+                    wp_reset_postdAta();
+            ?>
         </div>
     </div>
     </div>
